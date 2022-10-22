@@ -24,7 +24,7 @@ const GoalList = ({ goals }: { goals: IGoal[] }) => (
 const LastMatchCard: FC<Props> = ({ teamA, teamB }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="w-[calc(100%-2rem)] bg-gray-300 flex flex-col mt-5 rounded">
+    <div className="w-[calc(100%-2rem)] bg-gray-100 flex flex-col mt-5 rounded">
       <div className="flex text-gray-900 rounded bg-white w-full shadow p-4">
         <div className="w-[20%]">
           <h4>{teamA.name}</h4>
