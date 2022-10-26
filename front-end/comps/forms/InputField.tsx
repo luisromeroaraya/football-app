@@ -40,7 +40,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       readOnly,
       inputClassName = "border-gray-300 text-sm rounded py-2 px-3 text-gray-700 leading-tight no-change w-full",
       readOnlyClassName,
-      placeholder,
+      placeholder = labelName,
       required,
       disabled,
       min,
@@ -48,7 +48,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       isRequired,
       errorText,
     },
-    ref
+    ref,
   ) => (
     <div className={className}>
       {labelName && (
@@ -58,7 +58,11 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       )}
       <input
         ref={ref}
-        className={`${inputClassName} ${!readOnly ? "focus:outline-none focus:shadow-outline" : readOnlyClassName}`}
+        className={`${inputClassName} ${
+          !readOnly
+            ? "focus:shadow-outline focus:outline-none"
+            : readOnlyClassName
+        }`}
         type={type}
         name={name}
         id={id?.toString()}
@@ -74,7 +78,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       />
       <InputError errorText={errorText} />
     </div>
-  )
+  ),
 );
 
 InputField.displayName = "InputField";

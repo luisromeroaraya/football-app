@@ -15,3 +15,13 @@ export interface IMatchTeam {
   logo: string | null;
   goals: IGoal[];
 }
+
+export interface IUser {
+  id: number;
+  email: string;
+  name?: string;
+  role: string;
+}
+export type IJWTresponse = {
+  token: string;
+};

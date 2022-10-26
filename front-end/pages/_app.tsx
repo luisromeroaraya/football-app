@@ -10,6 +10,7 @@ import type { AppProps } from "next/app";
 import type { DehydratedState } from "@tanstack/react-query";
 import Layout from "../comps/ui/Layout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClient } from "../comps/hooks/queries/queryClient";
 import { useState } from "react";
 
 interface PageProps {
@@ -17,7 +18,6 @@ interface PageProps {
 }
 
 const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
-  const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
