@@ -22,6 +22,3 @@ export interface IUser {
   name?: string;
   role: string;
 }
-export type IJWTresponse = {
-  token: string;
-};

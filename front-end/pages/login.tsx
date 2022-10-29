@@ -1,22 +1,22 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import { IJWTresponse, IUser } from "../comps/types";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 import CustomForm from "../comps/forms/CustomForm";
 import InputField from "../comps/forms/InputField";
 import Link from "next/link";
-import axios from "axios";
-import { usePostData } from "../comps/hooks/queries/apiHooks";
+import { useRouter } from "next/router";
 
 interface Props {
   setIsLogged: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login: FC<Props> = ({ setIsLogged }) => {
-  const { mutate: login } = usePostData<IUser, IJWTresponse>({
-    url: "https://football-app-back-end.herokuapp.com/api/user/login/",
-    queries: [["current_user"]],
-    onSuccess: (res) => sessionStorage.setItem("jwtToken", res.token),
-  });
+const Login: FC<Props> = () => {
+  const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") router.push("/");
+  }, [status]);
 
   return (
     <div className="flex h-full w-screen flex-col items-center  text-white">
@@ -24,8 +24,8 @@ const Login: FC<Props> = ({ setIsLogged }) => {
         Organize your football games with Pichanga.
       </h1>
       <div className="mt-8 flex w-[calc(100%-2rem)]  flex-col">
-        <CustomForm<IJWTresponse>
-          onSubmit={login}
+        <CustomForm<{ username: string; password: string }>
+          onSubmit={async (data) => signIn("credentials", data)}
           className="flex flex-col items-center"
         >
           <InputField
