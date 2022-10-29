@@ -1,9 +1,11 @@
 package com.backend.footballapp.models.dtos;
 
+import com.backend.footballapp.models.entities.Profile;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.backend.footballapp.models.entities.User} entity
@@ -15,4 +17,8 @@ public class UserDTO {
     private final String username;
     private final boolean enabled;
     private final List<String> roles;
+    private Profile profile;
+    private Long mainTeam;
+    private Set<Long> teamsCreated;
+    private Set<Long> teams;
 }

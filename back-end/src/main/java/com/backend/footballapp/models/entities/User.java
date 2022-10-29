@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,18 +31,17 @@ public class User implements UserDetails {
     private boolean enabled = true;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = List.of("USER");
+    @Embedded
+    private Profile profile = new Profile();
     @CreationTimestamp
     private Instant createdAt;
-    private String phoneNumber;
-    private Country nationality;
-    private String userPic;
     @ManyToOne
     @JoinColumn(name = "main_team_id")
     private Team mainTeam;
     @OneToMany(mappedBy = "createdBy")
-    private Set<Team> teamsCreated;
-    @ManyToMany
-    private Set<Team> teams;
+    private Set<Team> teamsCreated = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Team> teams = new HashSet<>();
 
     public User(String username, String password, boolean enabled) {
         this.username = username;

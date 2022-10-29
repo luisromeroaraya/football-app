@@ -1,5 +1,7 @@
 package com.backend.footballapp.tools;
 
+import com.backend.footballapp.enums.Country;
+import com.backend.footballapp.models.entities.Team;
 import com.backend.footballapp.models.entities.User;
 import com.backend.footballapp.repositories.UserRepository;
 import org.springframework.beans.factory.InitializingBean;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DataInit implements InitializingBean {
