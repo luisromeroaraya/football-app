@@ -4,7 +4,6 @@ import com.backend.footballapp.models.entities.Profile;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +15,7 @@ public class UserDTO {
     private final Long id;
     private final String username;
     private final boolean enabled;
-    private final List<String> roles;
+    private final String role;
     private Profile profile;
     private Long mainTeam;
     private Set<Long> teamsCreated;

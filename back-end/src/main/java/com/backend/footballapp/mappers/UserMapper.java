@@ -20,7 +20,7 @@ public class UserMapper {
                     .id(entity.getId())
                     .username(entity.getUsername())
                     .enabled(entity.isEnabled())
-                    .roles(entity.getRoles())
+                    .role(entity.getRole())
                     .profile(entity.getProfile())
                     .mainTeam(entity.getMainTeam().getId())
                     .teamsCreated(entity.getTeamsCreated().stream().map(Team::getId).collect(Collectors.toSet()))
@@ -32,13 +32,12 @@ public class UserMapper {
                     .id(entity.getId())
                     .username(entity.getUsername())
                     .enabled(entity.isEnabled())
-                    .roles(entity.getRoles())
+                    .role(entity.getRole())
                     .profile(entity.getProfile())
                     .teamsCreated(entity.getTeamsCreated().stream().map(Team::getId).collect(Collectors.toSet()))
                     .teams(entity.getTeams().stream().map(Team::getId).collect(Collectors.toSet()))
                     .build();
         }
-
     }
 
     public User toEntity(UserCreateForm form) {
@@ -53,7 +52,9 @@ public class UserMapper {
         user.setUsername(form.getUsername());
         user.setPassword(form.getPassword());
         user.setEnabled(form.isEnabled());
-        user.setRoles(form.getRoles());
+        user.setRole(form.getRole());
+        user.setProfile(form.getProfile());
+//        user.setMainTeam(form.getMainTeam());
 //        user.setTeamsCreated(form.getTeamsCreated());
 //        user.setTeams(form.getTeams());
         return user;

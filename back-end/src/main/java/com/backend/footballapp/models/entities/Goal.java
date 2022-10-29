@@ -12,8 +12,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "goals") // a table named "user" can't be created, you have to rename it "users" here
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Goal {

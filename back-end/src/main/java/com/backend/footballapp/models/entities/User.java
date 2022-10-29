@@ -1,6 +1,5 @@
 package com.backend.footballapp.models.entities;
 
-import com.backend.footballapp.enums.Country;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,11 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Entity
 @Table(name = "users") // a table named "user" can't be created, you have to rename it "users" here
@@ -29,8 +24,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     private boolean enabled = true;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = List.of("USER");
+    private String role = "USER";
     @Embedded
     private Profile profile = new Profile();
     @CreationTimestamp
@@ -40,7 +34,7 @@ public class User implements UserDetails {
     private Team mainTeam;
     @OneToMany(mappedBy = "createdBy")
     private Set<Team> teamsCreated = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "players")
     private Set<Team> teams = new HashSet<>();
 
     public User(String username, String password, boolean enabled) {
@@ -49,16 +43,19 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public User(String username, String password, boolean enabled, List<String> roles) {
+    public User(String username, String password, boolean enabled, String role) {
         this(username, password, enabled);
-        this.roles = roles;
+        this.role = role;
+    }
+
+    public User(String username, String password, boolean enabled, String role, Profile profile) {
+        this(username, password, enabled, role);
+        this.profile = profile;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map((role) -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override

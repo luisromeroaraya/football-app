@@ -17,6 +17,6 @@ public class TeamDTO {
     private final String teamName;
     private final Country nationality;
     private final Instant createdAt;
-    private final Long createdById;
-    private final Set<Long> playerIds;
+    private final Long createdBy;
+    private final Set<Long> players;
 }
