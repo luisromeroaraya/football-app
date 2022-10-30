@@ -3,7 +3,6 @@ package com.backend.footballapp.models.dtos;
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ import java.util.Set;
  */
 @Data
 @Builder
-public class MatchDto {
+public class MatchDTO {
     private final Long id;
     private final Long teamAId;
     private final Long teamBId;

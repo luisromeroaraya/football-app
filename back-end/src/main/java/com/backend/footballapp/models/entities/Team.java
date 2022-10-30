@@ -9,12 +9,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "teams") // a table named "user" can't be created, you have to rename it "users" here
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Team {
@@ -22,13 +22,24 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String teamName;
-    private Country nationality;
-    private boolean isDefault = false;
+    private Country nationality = Country.BE;
     @CreationTimestamp
     private Instant createdAt;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
     @ManyToMany
-    private Set<User> players;
+    @JoinTable(
+            name = "teams_players",
+            joinColumns = { @JoinColumn(name = "team_id") },
+            inverseJoinColumns = { @JoinColumn(name = "player_id") }
+    )
+    private Set<User> players = new HashSet<>();
+
+    public Team(String teamName, Country nationality, User createdBy, Set<User> players) {
+        this.teamName = teamName;
+        this.nationality = nationality;
+        this.createdBy = createdBy;
+        this.players = players;
+    }
 }
