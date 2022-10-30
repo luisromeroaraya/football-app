@@ -1,7 +1,6 @@
 package com.backend.footballapp.repositories;
 
 import com.backend.footballapp.models.entities.User;
-import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
