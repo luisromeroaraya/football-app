@@ -17,19 +17,19 @@ const Navbar: FC = () => {
 
   return (
     <div
-      className="fixed z-50 mt-5 flex w-screen transition-transform duration-300 ease-in-out"
+      className="fixed z-50 mt-5 flex w-screen text-black transition-transform duration-300 ease-in-out"
       style={{ transform: `translate(${isOpen ? "0" : "85%"})` }}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-14 w-[15%] items-center justify-center rounded-l bg-white text-2xl text-black"
+        className="flex h-14 w-[15%] items-center justify-center rounded-l bg-white text-2xl "
       >
         <FontAwesomeIcon icon={faBars} />
       </button>
       <div className="flex w-[85%] flex-col rounded-bl bg-white">
         <div className="flex h-14 items-center justify-end text-xl">
           <h2>Hello, {user?.sub}</h2>
-          <Link href="/profile">
+          <Link href={`/players/${user?.sub}`}>
             <div className="mx-5 h-10 w-10 rounded-full bg-gray-600"></div>
           </Link>
         </div>

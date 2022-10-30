@@ -1,15 +1,13 @@
 import useDidMountEffect from "./useDidMountEffect";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-const useSecurePage = () => {
+const useAlreadyAuthenticated = () => {
   const { status } = useSession();
   const router = useRouter();
   useDidMountEffect(() => {
-    if (status !== "authenticated" && status !== "loading")
-      router.push("/login");
+    if (status === "authenticated") router.push("/");
   }, [status]);
 };
 
-export default useSecurePage;
+export default useAlreadyAuthenticated;

@@ -1,11 +1,11 @@
 export interface IPlayer {
-  id: string;
+  id: number;
   name: string;
   nationality: string;
 }
 
 export interface IGoal {
-  id: string;
+  id: number;
   time: string;
   player: IPlayer;
 }
@@ -19,4 +19,10 @@ export interface IMatchTeam {
 export interface IUser {
   sub: string;
   roles: string[];
+}
+
+export interface IOfficialTeam {
+  id: number;
+  name: string;
+  logo: string | null;
 }
