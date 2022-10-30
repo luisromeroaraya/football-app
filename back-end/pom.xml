@@ -8,11 +8,11 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>ExoSecurity</artifactId>
+    <groupId>com.backend.footballapp</groupId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ExoSecurity</name>
-    <description>ExoSecurity</description>
+    <name>backend</name>
+    <description>backend</description>
     <properties>
         <java.version>17</java.version>
     </properties>
