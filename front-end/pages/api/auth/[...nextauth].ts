@@ -18,8 +18,13 @@ const authOptions: NextAuthOptions = {
           "https://football-app-back-end.herokuapp.com/api/user/login/",
           credentials,
         );
-        if (res.status === 200) return jwt_decode(res.data.token);
-        throw new Error("Invalid username or password");
+        if (res.status === 200)
+          return {
+            ...jwt_decode(res.data.token),
+            token: res.data.token,
+            id: res.data.id,
+          };
+        return null;
       },
     }),
   ],

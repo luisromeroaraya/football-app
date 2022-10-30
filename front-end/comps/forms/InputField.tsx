@@ -1,5 +1,7 @@
 import { ChangeEventHandler, forwardRef } from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import InputError from "./InputError";
 
 interface Props {
@@ -23,6 +25,7 @@ interface Props {
   isRequired?: boolean;
   errorText?: string;
   checkValidation?: (value: string) => void;
+  icon?: IconProp;
 }
 
 const InputField = forwardRef<HTMLInputElement, Props>(
@@ -34,11 +37,11 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       name,
       labelName,
       labelClassName = "block text-sm font-bold mb-2 text-gray-700",
-      className = "flex flex-col",
+      className = "mt-8 flex w-full flex-col justify-center",
       type = "text",
       autoFocus,
       readOnly,
-      inputClassName = "border-gray-300 text-sm rounded py-2 px-3 text-gray-700 leading-tight no-change w-full",
+      inputClassName = "rounded border border-white py-3 px-12 text-white leading-tight no-change w-full bg-green-500 text-white placeholder-gray-200",
       readOnlyClassName,
       placeholder = labelName,
       required,
@@ -47,6 +50,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       max,
       isRequired,
       errorText,
+      icon,
     },
     ref,
   ) => (
@@ -55,6 +59,9 @@ const InputField = forwardRef<HTMLInputElement, Props>(
         <label className={labelClassName} htmlFor={id?.toString()}>
           {labelName} {isRequired && "*"}
         </label>
+      )}
+      {icon && (
+        <FontAwesomeIcon icon={icon} className="absolute z-10 ml-4 text-xl" />
       )}
       <input
         ref={ref}

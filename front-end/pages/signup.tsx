@@ -1,40 +1,44 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import {
   faCircleExclamation,
   faEnvelope,
   faKey,
 } from "@fortawesome/free-solid-svg-icons";
-import { signIn, useSession } from "next-auth/react";
 
 import CustomForm from "../comps/forms/CustomForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputField from "../comps/forms/InputField";
 import Link from "next/link";
 import Spinner from "../comps/ui/Spinner";
-import { useRouter } from "next/router";
+import axios from "axios";
+import { signIn } from "next-auth/react";
 import useSecurePage from "../comps/hooks/useSecurePage";
 
-const Login: FC = () => {
-  const router = useRouter();
-  const { signout } = router.query;
-  const [error, setError] = useState("");
+const SignUp: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useSecurePage();
 
   const onSubmit = async (data: { username: string; password: string }) => {
     setError("");
     setIsLoading(true);
-    const res = await signIn("credentials", { ...data, redirect: false });
-    if (res?.status === 200) return router.push("/");
-    setIsLoading(false);
-    setError("Invalid username or password.");
+    try {
+      const res = await axios.post(
+        "https://football-app-back-end.herokuapp.com/api/user/register/",
+        data,
+      );
+      if (res.status === 200) return signIn("credentials", data);
+    } catch (err) {
+      setIsLoading(false);
+      if (axios.isAxiosError(err)) setError(err.toString());
+    }
   };
 
   return (
     <div className="flex h-full w-screen flex-col items-center  text-white">
       <h1 className="mt-8 w-[calc(100%-2rem)] text-center text-4xl font-bold">
-        {signout ? <p>See you next time!</p> : "Welcome back!"}
+        Organize your football games with Pichanga.
       </h1>
       <div className="mt-8 flex w-[calc(100%-2rem)] flex-col">
         <CustomForm<{ username: string; password: string }>
@@ -62,13 +66,13 @@ const Login: FC = () => {
               </p>
             )}
           </div>
-          <button className="mt-8 rounded bg-gray-100 px-4 py-2 text-xl  font-bold uppercase text-gray-800 ">
-            Login
+          <button className="mt-8 rounded bg-white px-4 py-2 text-xl  font-bold uppercase text-gray-800 ">
+            Sign Up
           </button>
           <p className="mt-4">
-            Don't have an account?
-            <Link href="/signup">
-              <a className="text-blue-900"> Sign Up</a>
+            Already have an account?
+            <Link href="/login">
+              <a className="text-blue-900"> Log In</a>
             </Link>
           </p>
         </CustomForm>
@@ -77,4 +81,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default SignUp;

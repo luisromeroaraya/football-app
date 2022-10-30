@@ -15,7 +15,7 @@ const LastMatch: FC<Props> = ({ date, teamA, teamB, time }) => {
       <div className="flex flex-col w-full relative h-6 justify-center">
         <hr />
         <div className="flex w-full h-6 absolute justify-center">
-          <span className="bg-pichanga px-3">
+          <span className="bg-pichanga px-3 rounded">
             {date}, {time}
           </span>
         </div>

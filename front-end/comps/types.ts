@@ -17,8 +17,6 @@ export interface IMatchTeam {
 }
 
 export interface IUser {
-  id: number;
-  email: string;
-  name?: string;
-  role: string;
+  sub: string;
+  roles: string[];
 }

@@ -2,23 +2,34 @@ import { FC, ReactNode } from "react";
 
 import Link from "next/link";
 import Navbar from "./Navbar";
-import { useRouter } from "next/router";
+import bg from "../../public/assets/img/bg.jpg";
+import { useSession } from "next-auth/react";
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout: FC<Props> = ({ children }) => {
-  const router = useRouter();
+  const { status } = useSession();
   return (
-    <div className="w-screen h-screen bg-pichanga">
-      {router.pathname !== "/login" && <Navbar member={{ id: "1", name: "John" }} />}
-      <header className="w-full h-[10%] flex items-center justify-center">
-        <h1 className="text-white text-2xl uppercase font-bold italic">
-          <Link href="/">Pichangapp</Link>
-        </h1>
-      </header>
-      <main className="w-full flex flex-col h-[90%] overflow-y-scroll text-white">{children}</main>
+    <div
+      className="h-screen w-screen bg-cover bg-fixed bg-no-repeat"
+      style={{ backgroundImage: `url(${bg.src})` }}
+    >
+      <div
+        className="h-full w-full bg-pichanga"
+        style={{ backgroundColor: "rgb(34 175 83 / 0.9)" }}
+      >
+        {status === "authenticated" && <Navbar />}
+        <header className="flex h-[10%] w-full items-center justify-center">
+          <h1 className="text-2xl font-bold uppercase italic text-white">
+            <Link href="/">Pichanga</Link>
+          </h1>
+        </header>
+        <main className="flex h-[90%] w-full flex-col overflow-y-scroll text-white">
+          {children}
+        </main>
+      </div>
     </div>
   );
 };

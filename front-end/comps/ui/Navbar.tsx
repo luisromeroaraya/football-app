@@ -1,21 +1,20 @@
 import { FC, useState } from "react";
-import { faBars, faHouse } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faHouse,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { signOut, useSession } from "next-auth/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IUser } from "../types";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
-interface Props {
-  member: {
-    id: string;
-    name: string;
-  };
-}
-
-const Navbar: FC<Props> = ({ member }) => {
+const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
-  const { user } = session || {};
+  const user = session?.user as IUser;
+
   return (
     <div
       className="fixed z-50 mt-5 flex w-screen transition-transform duration-300 ease-in-out"
@@ -34,16 +33,29 @@ const Navbar: FC<Props> = ({ member }) => {
             <div className="mx-5 h-10 w-10 rounded-full bg-gray-600"></div>
           </Link>
         </div>
-        <ul className="h-60 w-full">
+        <ul className="w-full">
           <li className="w-full py-5 text-xl">
             <Link href="/">
-              <div className="flex w-full items-center py-2 pl-4">
+              <a className="flex w-full items-center py-2 pl-4">
                 <FontAwesomeIcon icon={faHouse} />
                 <span className="ml-2 leading-none">Home</span>
-              </div>
+              </a>
             </Link>
           </li>
         </ul>
+        <div className="flex w-full justify-end">
+          <button
+            className="mr-5 py-2"
+            onClick={() =>
+              signOut({
+                callbackUrl: `${window.location.origin}/login/?signout=true`,
+              })
+            }
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} className="mr-1" />
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );
