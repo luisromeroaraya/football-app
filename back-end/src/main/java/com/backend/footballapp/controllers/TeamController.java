@@ -29,22 +29,26 @@ public class TeamController {
     }
 
     @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
     public List<TeamDTO> readAll() {
         return teamService.readAll();
     }
 
     @GetMapping("/{id:[0-9]+}")
+    @ResponseStatus(HttpStatus.OK)
     public TeamDTO readOne(@PathVariable Long id) {
         return teamService.readOne(id);
     }
 
     @PatchMapping("/update/{id:[0-9]+}")
+    @ResponseStatus(HttpStatus.CREATED)
     @Secured({"ROLE_ADMIN", "ROLE_ORGANISER"})
     public TeamDTO update(@Valid @PathVariable Long id, @Valid @RequestBody TeamUpdateForm teamUpdateForm) {
         return teamService.update(id, teamUpdateForm);
     }
 
     @DeleteMapping("/delete/{id:[0-9]+}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Secured({"ROLE_ADMIN", "ROLE_ORGANISER"})
     public void delete(@Valid @PathVariable Long id) {
         teamService.delete(id);

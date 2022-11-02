@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,11 +25,6 @@ public class Match {
     private Team teamA;
     @OneToOne
     private Team teamB;
-    private Integer teamAScore = 0;
-    private Integer teamBScore = 0;
-    private Integer playersNumber = 0;
-    private Instant matchDate;
-    private String matchResult = "draw";
     private Instant startTime;
     private Instant endTime;
     private String location;
@@ -37,9 +33,17 @@ public class Match {
     @UpdateTimestamp
     private Instant updatedAt;
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User organisedBy;
-    @OneToMany
-    private Set<User> players;
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Goal> goals;
+    private Set<Goal> goals = new HashSet<>();
+
+    public Match(Team teamA, Team teamB, Instant startTime, Instant endTime, String location, User organisedBy) {
+        this.teamA = teamA;
+        this.teamB = teamB;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.organisedBy = organisedBy;
+    }
 }
