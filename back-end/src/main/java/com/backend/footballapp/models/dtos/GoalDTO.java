@@ -12,9 +12,9 @@ import java.time.Instant;
 @Builder
 public class GoalDTO {
     private final Long id;
-    private final Long playerId;
-    private final Long matchId;
-    private final Long teamId;
+    private final Long player;
+    private final Long match;
+    private final Long team;
     private final Instant goalTime;
     private final Instant createdAt;
     private final Instant updatedAt;

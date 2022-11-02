@@ -36,6 +36,8 @@ public class User implements UserDetails {
     private Set<Team> teamsCreated = new HashSet<>();
     @ManyToMany(mappedBy = "players")
     private Set<Team> teams = new HashSet<>();
+    @OneToMany(mappedBy = "player")
+    private Set<Goal> goals = new HashSet<>();
 
     public User(String username, String password, boolean enabled) {
         this.username = username;
@@ -51,6 +53,11 @@ public class User implements UserDetails {
     public User(String username, String password, boolean enabled, String role, Profile profile) {
         this(username, password, enabled, role);
         this.profile = profile;
+    }
+
+    public User(String username, String password, boolean enabled, String role, Profile profile, Team mainTeam) {
+        this(username, password, enabled, role, profile);
+        this.mainTeam = mainTeam;
     }
 
     @Override

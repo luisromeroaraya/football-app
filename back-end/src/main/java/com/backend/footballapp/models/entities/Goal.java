@@ -20,10 +20,13 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User player;
     @ManyToOne
+    @JoinColumn(name="match_id")
     private Match match;
     @ManyToOne
+    @JoinColumn(name="team_id")
     private Team team;
     private Instant goalTime;
     @CreationTimestamp
