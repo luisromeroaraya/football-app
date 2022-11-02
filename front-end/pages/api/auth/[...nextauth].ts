@@ -18,6 +18,7 @@ const authOptions: NextAuthOptions = {
           "https://football-app-back-end.herokuapp.com/api/user/login/",
           credentials,
         );
+        console.log(jwt_decode(res.data));
         if (res.status === 200)
           return {
             ...jwt_decode(res.data.token),

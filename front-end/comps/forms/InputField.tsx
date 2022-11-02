@@ -26,6 +26,7 @@ interface Props {
   errorText?: string;
   checkValidation?: (value: string) => void;
   icon?: IconProp;
+  initialValue?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, Props>(

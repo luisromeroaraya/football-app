@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { IOfficialTeam, IUser } from "../../types";
+import { ISessionUser, IUser } from "../../types";
 import { faEdit, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,47 +7,48 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 type Props = {
-  username: string;
-  countryCode?: string;
-  name?: string;
-  number?: number;
-  position?: string;
-  officialTeam?: IOfficialTeam;
-  bio?: string;
+  user: IUser;
+  isUserSessionProfile: boolean;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 };
 
 const PlayerHeader: FC<Props> = ({
-  username,
-  name = username,
-  number,
-  position,
-  countryCode,
-  officialTeam,
-  bio,
+  user,
   setEditMode,
+  isUserSessionProfile,
 }) => {
   const { data: session } = useSession();
-  const user = session?.user as IUser;
+  const sessionUser = session?.user as ISessionUser;
+  const { username, profile } = user;
+  const { country, bio, display_name, number, picture, position, teams } =
+    profile;
+
+  const officialTeam = teams.find((team) => team.is_official);
+
   return (
-    <header className="flex flex-col items-center">
-      <div className="absolute h-40 w-40 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800"></div>
+    <header className="relative flex flex-col items-center">
+      <div
+        className="absolute h-40 w-40 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${picture})` }}
+      ></div>
       <div className="flex h-20 w-full justify-between pt-4 text-xl">
         <div>
-          {user?.sub !== username && <FontAwesomeIcon icon={faUserPlus} />}
+          {!isUserSessionProfile && <FontAwesomeIcon icon={faUserPlus} />}
         </div>
-        {user?.sub === username && (
+        {isUserSessionProfile && (
           <FontAwesomeIcon icon={faEdit} onClick={() => setEditMode(true)} />
         )}
       </div>
       <span className="mt-4 text-gray-700">@{username}</span>
       <div className="flex w-full items-center justify-center text-3xl">
-        {countryCode && (
+        {country && (
           <img
-            src={`https://www.countryflagicons.com/FLAT/32/${countryCode.toUpperCase()}.png`}
+            src={`https://www.countryflagicons.com/FLAT/32/${country.toUpperCase()}.png`}
           />
         )}
-        <h2 className="ml-2 font-bold capitalize leading-none">{name}</h2>
+        <h2 className="ml-2 font-bold capitalize leading-none">
+          {display_name}
+        </h2>
         {number && (
           <span className="ml-2 font-bold leading-none">{number}</span>
         )}
@@ -62,8 +63,8 @@ const PlayerHeader: FC<Props> = ({
         <Link href={`/teams/${officialTeam?.id}`}>
           <a className="mt-3 flex w-full items-center justify-center text-sm capitalize text-gray-500">
             <div
-              className="h-5 w-5 rounded-full bg-gray-800"
-              style={{ backgroundImage: `url(${officialTeam?.logo})` }}
+              className="h-5 w-5 rounded-full bg-gray-800 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${officialTeam.logo})` }}
             ></div>
             <span className="ml-2">{officialTeam?.name}</span>
           </a>
