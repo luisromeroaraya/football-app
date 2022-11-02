@@ -58,6 +58,12 @@ public class UserController {
         return userService.readOne(id);
     }
 
+    @GetMapping("/profile")
+    @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})
+    public UserDTO readProfile(Authentication authentication) {
+        return userService.readProfile(authentication.getName());
+    }
+
     @PatchMapping("/update/{id:[0-9]+}")
     @ResponseStatus(HttpStatus.CREATED)
     @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})

@@ -65,6 +65,11 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new ElementNotFoundException(User.class, id)));
     }
 
+    public UserDTO readProfile(String username) {
+        return userMapper.toDto(userRepository.findByUsername(username)
+                .orElseThrow(() -> new ElementNotFoundException(User.class, username)));
+    }
+
     public UserDTO update(Long id, UserUpdateForm form) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(User.class, id));
