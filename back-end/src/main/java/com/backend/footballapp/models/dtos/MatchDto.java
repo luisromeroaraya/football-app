@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -13,19 +14,13 @@ import java.util.Set;
 @Builder
 public class MatchDTO {
     private final Long id;
-    private final Long teamAId;
-    private final Long teamBId;
-    private final Integer teamAScore;
-    private final Integer teamBScore;
-    private final Integer playersNumber;
-    private final Instant matchDate;
-    private final String matchResult;
+    private final Long teamA;
+    private final Long teamB;
     private final Instant startTime;
     private final Instant endTime;
     private final String location;
     private final Instant createdAt;
     private final Instant updatedAt;
-    private final Long organisedById;
-    private final Set<Long> playerIds;
-    private final Set<Long> goalIds;
+    private final Long organisedBy;
+    private final Set<Long> goals;
 }
