@@ -1,10 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
-import { ISessionUser, IUser } from "../../comps/types";
+import { ISession, ISessionUser, IUser } from "../../comps/types";
 
 import EditProfile from "../../comps/pages/players/EditProfile";
 import Head from "next/head";
 import PlayerHeader from "../../comps/pages/players/PlayerHeader";
 import PlayerStats from "../../comps/pages/players/PlayerStats";
+import axios from "axios";
 import { getSession } from "next-auth/react";
 import useSecurePage from "../../comps/hooks/useSecurePage";
 import { useState } from "react";
@@ -34,7 +35,7 @@ const Profile: NextPage<Props> = ({ user, isUserSessionProfile }) => {
           setEditMode={setEditMode}
           isUserSessionProfile={isUserSessionProfile}
         />
-        <PlayerStats goals={goals} matches={matches} fans={fans.length} />
+        <PlayerStats goals={goals} matches={matches} fans={fans?.length} />
       </div>
       {isUserSessionProfile && (
         <EditProfile
@@ -49,41 +50,15 @@ const Profile: NextPage<Props> = ({ user, isUserSessionProfile }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  // const { user } = session as unknown as ISession; // TODO: fix this
-  // const { data } = await axios.get(
-  //   `https://football-app-back-end.herokuapp.com/api/user/${session?.user?.id}`,
-  //   {
-  //     headers: {
-  //       Authorization: `Bearer ${session?.user.token}`,
-  //     },
-  //   },
-  // );
-  const user: IUser = {
-    id: 1,
-    email: "user@user.com",
-    username: "user",
-    profile: {
-      id: 1,
-      goals: 10,
-      matches: 10,
-      fans: [],
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed",
-      country: "br",
-      display_name: "Userinho",
-      number: 10,
-      position: "midfielder",
-      picture:
-        "https://estaticos-cdn.sport.es/clip/ae1f1131-ae9d-490d-999b-1e702bf4c109_alta-libre-aspect-ratio_default_0.jpg",
-      teams: [
-        {
-          id: 1,
-          logo: "https://wallpaperaccess.com/full/777518.jpg",
-          name: "barcelona",
-          is_official: true,
-        },
-      ],
+  const { user: sessionUser } = session as unknown as ISession; // TODO: fix this
+  const { data: user } = await axios.get<IUser>(
+    "https://football-app-back-end.herokuapp.com/api/user/profile",
+    {
+      headers: {
+        Authorization: `Bearer ${sessionUser.token}`,
+      },
     },
-  };
+  );
   return {
     props: {
       user,

@@ -1,10 +1,10 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { ISessionUser, IUser } from "../../types";
 import { faEdit, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IUser } from "../../types";
+import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 type Props = {
   user: IUser;
@@ -17,19 +17,14 @@ const PlayerHeader: FC<Props> = ({
   setEditMode,
   isUserSessionProfile,
 }) => {
-  const { data: session } = useSession();
-  const sessionUser = session?.user as ISessionUser;
-  const { username, profile } = user;
-  const { country, bio, display_name, number, picture, position, teams } =
-    profile;
-
-  const officialTeam = teams.find((team) => team.is_official);
+  const { username, profile, teams, mainTeam } = user;
+  const { country, bio, displayName, number, userPic, position } = profile;
 
   return (
     <header className="relative flex flex-col items-center">
       <div
         className="absolute h-40 w-40 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${picture})` }}
+        style={{ backgroundImage: `url(${userPic})` }}
       ></div>
       <div className="flex h-20 w-full justify-between pt-4 text-xl">
         <div>
@@ -42,12 +37,15 @@ const PlayerHeader: FC<Props> = ({
       <span className="mt-4 text-gray-700">@{username}</span>
       <div className="flex w-full items-center justify-center text-3xl">
         {country && (
-          <img
+          <Image
             src={`https://www.countryflagicons.com/FLAT/32/${country.toUpperCase()}.png`}
+            alt="country flag"
+            width={32}
+            height={32}
           />
         )}
         <h2 className="ml-2 font-bold capitalize leading-none">
-          {display_name}
+          {displayName}
         </h2>
         {number && (
           <span className="ml-2 font-bold leading-none">{number}</span>
@@ -59,14 +57,14 @@ const PlayerHeader: FC<Props> = ({
         </span>
       )}
       {/* // TODO: find icon for position */}
-      {officialTeam && (
-        <Link href={`/teams/${officialTeam?.id}`}>
+      {mainTeam && (
+        <Link href={`/teams/${mainTeam?.id}`}>
           <a className="mt-3 flex w-full items-center justify-center text-sm capitalize text-gray-500">
             <div
               className="h-5 w-5 rounded-full bg-gray-800 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${officialTeam.logo})` }}
+              style={{ backgroundImage: `url(${mainTeam.logo})` }}
             ></div>
-            <span className="ml-2">{officialTeam?.name}</span>
+            <span className="ml-2">{mainTeam?.name}</span>
           </a>
         </Link>
       )}

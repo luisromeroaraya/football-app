@@ -17,7 +17,6 @@ export interface IMatchTeam {
 }
 
 export interface ISessionUser {
-  id: number;
   sub: string;
   roles: string[];
   token: string;
@@ -28,9 +27,12 @@ export interface ISessionUser {
 
 export interface IUser {
   id: number;
+  enabled: boolean;
   email: string;
   username: string;
   profile: IUserProfile;
+  mainTeam: ITeam;
+  teams: ITeam[];
 }
 
 export interface ISession {
@@ -39,20 +41,36 @@ export interface ISession {
 
 export interface IUserProfile {
   id: number;
-  display_name: string;
-  picture: string;
+  displayName: string;
+  userPic: string;
+  role: string;
   position: string;
-  number: number;
-  teams: ITeam[];
+  number?: number;
+  phoneNumber: string;
   country: string;
   bio: string;
-  goals: number;
-  matches: number;
-  fans: number[];
+  birthDate: string;
+  goals?: number;
+  matches?: number;
+  fans?: number[];
 }
 export interface ITeam {
   id: number;
-  name: string;
-  logo: string | null;
-  is_official: boolean;
+  name?: string;
+  logo?: string | null;
 }
+
+export type IPosition =
+  | "GK"
+  | "CB"
+  | "LB"
+  | "RB"
+  | "CDM"
+  | "CM"
+  | "LM"
+  | "RM"
+  | "CAM"
+  | "CF"
+  | "ST"
+  | "LW"
+  | "RW";
