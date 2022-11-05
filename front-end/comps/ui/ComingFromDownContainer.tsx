@@ -20,7 +20,7 @@ const ComingFromDownContainer: FC<Props> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (editMode) return setTransitionClass("translate-y-0");
+      if (editMode) return setTransitionClass("");
       setTransitionClass("translate-y-full");
     }, 100);
     return () => clearTimeout(timer);
