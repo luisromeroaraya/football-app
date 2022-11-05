@@ -28,7 +28,7 @@ const ComingFromDownContainer: FC<Props> = ({
 
   return editMode ? (
     <div
-      className={`absolute z-50 top-0 h-screen w-screen rounded bg-white text-black transition-transform duration-200 ease-in-out ${transitionClass}`}
+      className={`absolute top-0 left-0 z-40 min-h-[100vh] w-screen rounded bg-white text-black transition-transform duration-200 ease-in-out ${transitionClass} overflow-scroll`}
     >
       <div className="flex h-[10%] w-full justify-between p-4">
         <div className="w-16"></div>

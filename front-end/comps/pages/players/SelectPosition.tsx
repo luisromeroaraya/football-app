@@ -19,9 +19,9 @@ const SelectPosition: FC<Props> = ({
   const ref = useRef<HTMLDivElement | null>(null);
   useClickOutside({ ref, setToggle: setIsSelectPositionOpen });
   return (
-    <div className="fixed top-0 right-0 z-50 flex h-screen w-screen items-center justify-center bg-gray-600/70">
+    <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-gray-600/70">
       <div
-        className="flex h-[80%] w-[90%] flex-col rounded-lg border bg-cover bg-center bg-no-repeat"
+        className="flex h-[500px] w-[90%] flex-col rounded-lg border bg-cover bg-center bg-no-repeat"
         ref={ref}
         style={{
           backgroundImage: `url(${fieldBg.src})`,

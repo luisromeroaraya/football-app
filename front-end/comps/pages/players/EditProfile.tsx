@@ -4,7 +4,7 @@ import ComingFromDownContainer from "../../ui/ComingFromDownContainer";
 import { IUser } from "../../types";
 import InputField from "../../forms/InputField";
 import PositionSelectButton from "./PositionSelectButton";
-import SelectPosition from "./SelectPosition";
+import TextAreaInputField from "../../forms/TextAreaInputField";
 
 interface Props {
   user: IUser;
@@ -27,7 +27,9 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
   } = profile;
   const userOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const profileOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const profileOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) =>
     setFormData({
       ...formData,
       profile: { ...profile, [e.target.name]: e.target.value },
@@ -70,6 +72,16 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
           value={position}
         />
         <InputField
+          type="number"
+          name="number"
+          min={1}
+          max={99}
+          labelName="Number"
+          value={number?.toString()}
+          onChange={profileOnChange}
+          inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
+        />
+        <InputField
           name="country"
           labelName="Country"
           value={country}
@@ -77,15 +89,15 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
           inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
         />
       </div>
-      <InputField
+      <TextAreaInputField
         name="bio"
         labelName="Bio"
         value={bio}
         onChange={profileOnChange}
-        inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
+        textAreaClassName="bg-gray-200 p-3 rounded-xl mt-2"
       />
       <button
-        className="my-4 w-full rounded bg-pichanga p-3 text-white"
+        className="my-8 w-full rounded-xl bg-pichanga p-3 text-white"
         type="submit"
       >
         Save

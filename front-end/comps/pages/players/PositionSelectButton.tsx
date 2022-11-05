@@ -1,18 +1,17 @@
 import {
-  Dispatch,
-  FC,
-  MouseEventHandler,
-  SetStateAction,
-  useState,
+    Dispatch,
+    FC,
+    MouseEventHandler,
+    SetStateAction,
+    useState
 } from "react";
-import {
-  faChevronDown,
-  faHandPointUp,
-} from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IUser } from "../../types";
 import SelectPosition from "./SelectPosition";
+import {
+    faChevronDown
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   value: string | null;
