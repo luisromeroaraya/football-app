@@ -44,7 +44,7 @@ export interface IUserProfile {
   displayName: string;
   userPic: string;
   role: string;
-  position: string;
+  position: string | null;
   number?: number;
   phoneNumber: string;
   country: string;

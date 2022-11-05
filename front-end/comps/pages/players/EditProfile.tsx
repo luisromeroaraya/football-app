@@ -1,9 +1,9 @@
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 
 import ComingFromDownContainer from "../../ui/ComingFromDownContainer";
-import CustomForm from "../../forms/CustomForm";
 import { IUser } from "../../types";
 import InputField from "../../forms/InputField";
+import PositionSelectButton from "./PositionSelectButton";
 import SelectPosition from "./SelectPosition";
 
 interface Props {
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
-  const [isSelectPositionOpen, setIsSelectPositionOpen] = useState(false);
-  const { username, profile, mainTeam, teams } = user;
+  const [formData, setFormData] = useState<IUser>({ ...user });
+  const { username, profile, mainTeam, teams } = formData;
   const {
     bio,
     displayName,
@@ -25,6 +25,13 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
     birthDate,
     phoneNumber,
   } = profile;
+  const userOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const profileOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFormData({
+      ...formData,
+      profile: { ...profile, [e.target.name]: e.target.value },
+    });
   return (
     <ComingFromDownContainer
       editMode={editMode}
@@ -43,29 +50,39 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
       <InputField
         name="username"
         labelName="Username"
-        initialValue={username}
-        inputClassName="bg-gray-200 p-3 rounded"
+        value={username}
+        onChange={userOnChange}
+        inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
         isRequired
       />
       <InputField
         name="displayName"
         labelName="Display name"
-        initialValue={displayName}
-        inputClassName="bg-gray-200 p-3 rounded"
+        value={displayName}
+        onChange={profileOnChange}
+        inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
         isRequired
       />
-      <button onClick={() => setIsSelectPositionOpen(true)}>POSITION</button>
-      <InputField
-        name="country"
-        labelName="Country"
-        initialValue={country}
-        inputClassName="bg-gray-200 p-3 rounded"
-      />
+      <div className="grid w-full grid-cols-3 gap-10">
+        <PositionSelectButton
+          formData={formData}
+          setFormData={setFormData}
+          value={position}
+        />
+        <InputField
+          name="country"
+          labelName="Country"
+          value={country}
+          onChange={profileOnChange}
+          inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
+        />
+      </div>
       <InputField
         name="bio"
         labelName="Bio"
-        initialValue={bio}
-        inputClassName="bg-gray-200 p-3 rounded"
+        value={bio}
+        onChange={profileOnChange}
+        inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
       />
       <button
         className="my-4 w-full rounded bg-pichanga p-3 text-white"
@@ -73,7 +90,6 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
       >
         Save
       </button>
-      {isSelectPositionOpen && <SelectPosition onSelect={() => undefined} />}
     </ComingFromDownContainer>
   );
 };
