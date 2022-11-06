@@ -1,10 +1,10 @@
 package com.backend.footballapp.mappers;
 
 import com.backend.footballapp.models.dtos.UserDTO;
+import com.backend.footballapp.models.entities.Goal;
 import com.backend.footballapp.models.entities.Team;
 import com.backend.footballapp.models.entities.User;
 import com.backend.footballapp.models.forms.UserCreateForm;
-import com.backend.footballapp.models.forms.UserUpdateForm;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -23,8 +23,9 @@ public class UserMapper {
                     .role(entity.getRole())
                     .profile(entity.getProfile())
                     .mainTeam(entity.getMainTeam().getId())
-                    .teamsCreated(entity.getTeamsCreated().stream().map(Team::getId).collect(Collectors.toSet()))
                     .teams(entity.getTeams().stream().map(Team::getId).collect(Collectors.toSet()))
+                    .goals(entity.getGoals().stream().map(Goal::getId).collect(Collectors.toSet()))
+                    .goalsTotal(entity.getGoalsTotal())
                     .build();
         }
         else {
@@ -34,8 +35,9 @@ public class UserMapper {
                     .enabled(entity.isEnabled())
                     .role(entity.getRole())
                     .profile(entity.getProfile())
-                    .teamsCreated(entity.getTeamsCreated().stream().map(Team::getId).collect(Collectors.toSet()))
                     .teams(entity.getTeams().stream().map(Team::getId).collect(Collectors.toSet()))
+                    .goals(entity.getGoals().stream().map(Goal::getId).collect(Collectors.toSet()))
+                    .goalsTotal(entity.getGoalsTotal())
                     .build();
         }
     }
@@ -44,19 +46,6 @@ public class UserMapper {
         User user = new User();
         user.setUsername(form.getUsername());
         user.setPassword(form.getPassword());
-        return user;
-    }
-
-    public User toEntity(UserUpdateForm form) {
-        User user = new User();
-        user.setUsername(form.getUsername());
-        user.setPassword(form.getPassword());
-        user.setEnabled(form.isEnabled());
-        user.setRole(form.getRole());
-        user.setProfile(form.getProfile());
-//        user.setMainTeam(form.getMainTeam());
-//        user.setTeamsCreated(form.getTeamsCreated());
-//        user.setTeams(form.getTeams());
         return user;
     }
 }

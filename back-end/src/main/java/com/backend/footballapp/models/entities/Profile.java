@@ -15,11 +15,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile {
-    private String displayName = "";
-    private String userPic = "";
+    private String displayName;
+    private String mail;
+    private String userPic;
     private Position position;
-    private Country country = Country.BE;
+    private Country country;
     private LocalDate birthDate;
-    private String phoneNumber = "";
-    private String bio = "";
+    private String phoneNumber;
+    private String bio;
 }

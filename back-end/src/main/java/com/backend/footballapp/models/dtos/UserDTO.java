@@ -1,5 +1,6 @@
 package com.backend.footballapp.models.dtos;
 
+import com.backend.footballapp.models.entities.Goal;
 import com.backend.footballapp.models.entities.Profile;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class UserDTO {
     private final String role;
     private Profile profile;
     private Long mainTeam;
-    private Set<Long> teamsCreated;
     private Set<Long> teams;
+    private Set<Long> goals;
+    private Long goalsTotal;
 }

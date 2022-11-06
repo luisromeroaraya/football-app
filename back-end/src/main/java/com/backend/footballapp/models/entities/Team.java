@@ -28,7 +28,7 @@ public class Team {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "teams_players",
             joinColumns = { @JoinColumn(name = "team_id") },
