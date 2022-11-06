@@ -32,11 +32,11 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "main_team_id")
     private Team mainTeam;
-    @OneToMany(mappedBy = "createdBy")
-    private Set<Team> teamsCreated = new HashSet<>();
-    @ManyToMany(mappedBy = "players")
+    @ManyToMany(mappedBy = "players", fetch = FetchType.LAZY)
     private Set<Team> teams = new HashSet<>();
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+    private Set<Team> teamsCreated = new HashSet<>();
+    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY)
     private Set<Goal> goals = new HashSet<>();
 
     public User(String username, String password, boolean enabled) {
@@ -82,6 +82,10 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return enabled;
+    }
+
+    public Long getGoalsTotal() {
+        return (long) goals.size();
     }
 }

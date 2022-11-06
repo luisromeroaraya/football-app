@@ -23,15 +23,21 @@ public class Goal {
     @JoinColumn(name="user_id")
     private User player;
     @ManyToOne
-    @JoinColumn(name="match_id")
-    private Match match;
-    @ManyToOne
     @JoinColumn(name="team_id")
     private Team team;
+    @ManyToOne
+    @JoinColumn(name="match_id")
+    private Match match;
     private Instant goalTime;
     @CreationTimestamp
     private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
 
+    public Goal(User player, Team team, Match match, Instant goalTime) {
+        this.player = player;
+        this.team = team;
+        this.match = match;
+        this.goalTime = goalTime;
+    }
 }

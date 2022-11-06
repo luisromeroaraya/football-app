@@ -11,11 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class MatchMapper {
-    private final TeamRepository teamRepository;
-
-    public MatchMapper(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
-    }
 
     public MatchDTO toDto(Match entity) {
         if (entity == null)
@@ -24,6 +19,8 @@ public class MatchMapper {
                 .id(entity.getId())
                 .teamA(entity.getTeamA().getId())
                 .teamB(entity.getTeamB().getId())
+                .scoreTeamA(entity.getScoreTeamA())
+                .scoreTeamB(entity.getScoreTeamB())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())
                 .location(entity.getLocation())

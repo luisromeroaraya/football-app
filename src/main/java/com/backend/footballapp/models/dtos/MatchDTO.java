@@ -15,6 +15,8 @@ public class MatchDTO {
     private final Long id;
     private final Long teamA;
     private final Long teamB;
+    private final Long scoreTeamA;
+    private final Long scoreTeamB;
     private final Instant startTime;
     private final Instant endTime;
     private final String location;

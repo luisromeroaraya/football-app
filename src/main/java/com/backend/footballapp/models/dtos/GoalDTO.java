@@ -13,8 +13,8 @@ import java.time.Instant;
 public class GoalDTO {
     private final Long id;
     private final Long player;
-    private final Long match;
     private final Long team;
+    private final Long match;
     private final Instant goalTime;
     private final Instant createdAt;
     private final Instant updatedAt;
