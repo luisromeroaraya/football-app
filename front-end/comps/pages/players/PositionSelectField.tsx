@@ -36,11 +36,17 @@ const PositionSelectField: FC<Props> = ({ value, formData, setFormData }) => {
           Position
         </label>
         <button
-          onClick={() => setIsSelectPositionOpen(true)}
+          onClick={(e) => {
+            e.preventDefault();
+            setIsSelectPositionOpen(true);
+          }}
           className="mt-2 flex items-center justify-between rounded-xl bg-gray-200 pl-3 pt-3 pb-3 focus:border-2 focus:border-black focus:outline-none"
         >
           <span>{value || "POS"}</span>
-          <FontAwesomeIcon className="text-[0.6rem] font-extrabold text-black mr-1" icon={faChevronDown} />
+          <FontAwesomeIcon
+            className="mr-1 text-[0.6rem] font-extrabold text-black"
+            icon={faChevronDown}
+          />
         </button>
       </div>
       {isSelectPositionOpen && (

@@ -3,11 +3,11 @@ import axios, { AxiosRequestConfig } from "axios";
 export const getRequest = <T>(url: string, config?: AxiosRequestConfig<T>) =>
   axios.get(url, config).then((res) => res.data);
 
-export const putRequest = <T>(
+export const patchRequest = <T>(
   url: string,
   values: T,
   config?: AxiosRequestConfig<T>,
-) => axios.put(url, values, config).then((res) => res.data);
+) => axios.patch(url, values, config).then((res) => res.data);
 
 export const postRequest = <T>(
   url: string,

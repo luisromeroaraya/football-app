@@ -1,15 +1,15 @@
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
-import { ITeam, IUser } from "../../types";
-import { useGetData, usePostData } from "../../hooks/queries/apiHooks";
+import { ISessionUser, ITeam, IUser } from "../../types";
+import { useGetData, usePatchData } from "../../hooks/queries/apiHooks";
 
 import ComingFromDownContainer from "../../ui/ComingFromDownContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputField from "../../forms/InputField";
 import PositionSelectField from "./PositionSelectField";
 import SelectField from "../../forms/SelectField";
 import TextAreaInputField from "../../forms/TextAreaInputField";
 import countries from "../../data/countries.json";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { queryClient } from "../../hooks/queries/queryClient";
+import { useSession } from "next-auth/react";
 
 interface Props {
   user: IUser;
@@ -18,7 +18,8 @@ interface Props {
 }
 
 const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
-  const [formData, setFormData] = useState<IUser>({ ...user });
+  const { token } = (useSession().data?.user as ISessionUser) || {};
+  const [formData, setFormData] = useState<IUser>(user);
   const { username, profile, mainTeam, teams, id } = formData;
   const {
     bio,
@@ -36,10 +37,20 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
     query: ["teams"],
   });
 
-  // const { mutate: updateUser } = usePostData({
-  //   url: `https://football-app-back-end.herokuapp.com/api/user/update/${id}`,
-  //   queries: [["teams"]],
-  // }); TO CREATE A USEPATCHDATA HOOK
+  const { mutate: updateUser, isLoading } = usePatchData({
+    url: `https://football-app-back-end.herokuapp.com/api/user/update/${id}`,
+    queries: [["teams"]],
+    config: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    onSuccess: () => {
+      queryClient.setQueryData(["user", id], formData);
+      setEditMode(false);
+    },
+  });
+
   const userOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const profileOnChange = (
@@ -116,10 +127,6 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
             selectClassName="bg-gray-200 p-3 rounded-xl mt-2"
             options={Array.from({ length: 99 }, (_, i) => i + 1).map((num) => (
               <option key={num} value={num.toString()}>
-                <FontAwesomeIcon
-                  className="text-gray-600"
-                  icon={faChevronDown}
-                />
                 {num}
               </option>
             ))}
@@ -176,7 +183,7 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
           className="my-8 w-full rounded-xl bg-pichanga p-3 text-white"
           type="submit"
         >
-          Save
+          {isLoading ? "Loading..." : "Save"}
         </button>
       </form>
     </ComingFromDownContainer>
