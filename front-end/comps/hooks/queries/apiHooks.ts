@@ -7,8 +7,8 @@ import {
 import {
   deleteRequest,
   getRequest,
+  patchRequest,
   postRequest,
-  putRequest,
 } from "../../api/axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -20,13 +20,13 @@ const useCustomMutation = <TPreviousItems, TNewItem>({
   request,
   url,
   optimisticQuery,
-  params,
+  config,
   updater,
   queries,
   toastText,
   onSuccess,
 }: IUseCustomMutation<TPreviousItems, TNewItem>) =>
-  useMutation((values) => request(url || "", values, params), {
+  useMutation((values) => request(url || "", values, config), {
     onMutate: async (newItem: TNewItem) => {
       if (optimisticQuery) {
         await queryClient.cancelQueries(optimisticQuery);
@@ -57,17 +57,17 @@ const useCustomMutation = <TPreviousItems, TNewItem>({
 export const useGetData = <T>({
   query,
   url,
-  params,
+  config,
   options,
 }: IGetParameters<T>) =>
-  useQuery<T>(query, () => getRequest(url, { params }), options);
+  useQuery<T>(query, () => getRequest(url, config), options);
 
 export const usePostData = <TPreviousItems, TNewItem>({
   url,
   queries,
   optimisticQuery,
   updater,
-  params,
+  config,
   onSuccess,
 }: IOptimisticMutationsParams<TPreviousItems, TNewItem>) =>
   useCustomMutation<TPreviousItems, TNewItem>({
@@ -76,25 +76,25 @@ export const usePostData = <TPreviousItems, TNewItem>({
     queries,
     optimisticQuery,
     updater,
-    params,
+    config,
     onSuccess,
   });
 
-export const usePutData = <TPreviousItems, TNewItem>({
+export const usePatchData = <TPreviousItems, TNewItem>({
   url,
   queries,
   optimisticQuery,
   updater,
-  params,
+  config,
   onSuccess,
 }: IOptimisticMutationsParams<TPreviousItems, TNewItem>) =>
   useCustomMutation<TPreviousItems, TNewItem>({
-    request: putRequest,
+    request: patchRequest,
     url,
     queries,
     optimisticQuery,
     updater,
-    params,
+    config,
     onSuccess,
   });
 

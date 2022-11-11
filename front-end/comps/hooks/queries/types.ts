@@ -4,9 +4,9 @@ import { AxiosRequestConfig } from "axios";
 
 export type TQueries = QueryKey[] | undefined;
 export interface IGetParameters<T> {
-  query: string[];
+  query: QueryKey;
   url: string;
-  params?: Record<string, unknown>;
+  config?: Record<string, unknown>;
   options?: UseQueryOptions<T>;
 }
 export interface IOptimisticMutationsParams<TPreviousItems, TNewItem> {
@@ -17,7 +17,7 @@ export interface IOptimisticMutationsParams<TPreviousItems, TNewItem> {
     previousItems?: TPreviousItems,
     newItem?: TNewItem,
   ) => TPreviousItems | undefined;
-  params?: AxiosRequestConfig;
+  config?: AxiosRequestConfig;
   onSuccess?: (res: TNewItem) => void;
 }
 
@@ -26,7 +26,7 @@ export interface IUseCustomMutation<TPreviousItems, TNewItem>
   request: (
     url: string,
     values: TNewItem,
-    params?: AxiosRequestConfig,
+    config?: AxiosRequestConfig,
   ) => Promise<TNewItem>;
   toastText?: string;
 }
