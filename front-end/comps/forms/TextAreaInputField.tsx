@@ -6,7 +6,7 @@ interface Props {
   value?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   labelName?: string;
-  id?: string | number;
+  id: string | number;
   name: string;
   errorText?: string;
   placeholder?: string;

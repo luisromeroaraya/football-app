@@ -1,10 +1,14 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
 
 import ComingFromDownContainer from "../../ui/ComingFromDownContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IUser } from "../../types";
 import InputField from "../../forms/InputField";
-import PositionSelectButton from "./PositionSelectButton";
+import PositionSelectField from "./PositionSelectField";
+import SelectField from "../../forms/SelectField";
 import TextAreaInputField from "../../forms/TextAreaInputField";
+import countries from "../../data/countries.json";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   user: IUser;
@@ -28,7 +32,9 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
   const userOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const profileOnChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) =>
     setFormData({
       ...formData,
@@ -50,6 +56,7 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
         </button>
       </div>
       <InputField
+        id="username"
         name="username"
         labelName="Username"
         value={username}
@@ -58,6 +65,7 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
         isRequired
       />
       <InputField
+        id="displayName"
         name="displayName"
         labelName="Display name"
         value={displayName}
@@ -66,30 +74,41 @@ const EditProfile: FC<Props> = ({ user, editMode, setEditMode }) => {
         isRequired
       />
       <div className="grid w-full grid-cols-3 gap-10">
-        <PositionSelectButton
+        <PositionSelectField
           formData={formData}
           setFormData={setFormData}
           value={position}
         />
-        <InputField
-          type="number"
-          name="number"
-          min={1}
-          max={99}
+        <SelectField
+          id="tshirtNumber"
+          name="tshirtNumber"
           labelName="Number"
           value={number?.toString()}
           onChange={profileOnChange}
-          inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
+          selectClassName="bg-gray-200 p-3 rounded-xl mt-2"
+          options={Array.from({ length: 99 }, (_, i) => i + 1).map((num) => (
+            <option key={num} value={num.toString()}>
+              <FontAwesomeIcon className="text-gray-600" icon={faChevronDown} />
+              {num}
+            </option>
+          ))}
         />
-        <InputField
+        <SelectField
+          id="country"
           name="country"
           labelName="Country"
-          value={country}
           onChange={profileOnChange}
-          inputClassName="bg-gray-200 p-3 rounded-xl mt-2"
+          value={country}
+          selectClassName="bg-gray-200 p-3 rounded-xl mt-2"
+          options={Object.entries(countries).map(([key, value]) => (
+            <option key={key} value={key}>
+              {value}
+            </option>
+          ))}
         />
       </div>
       <TextAreaInputField
+        id="bio"
         name="bio"
         labelName="Bio"
         value={bio}

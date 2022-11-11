@@ -7,7 +7,7 @@ import InputError from "./InputError";
 interface Props {
   value?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  id?: string | number;
+  id: string | number;
   name: string;
   labelName?: string;
   labelClassName?: string;

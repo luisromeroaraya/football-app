@@ -1,7 +1,7 @@
 import { Dispatch, FC, MouseEventHandler, SetStateAction, useRef } from "react";
 
 import PositionBall from "./PositionBall";
-import PositionRow from "./positionRow";
+import PositionRow from "./PositionRow";
 import fieldBg from "../../../public/assets/img/football-field.jpg";
 import useClickOutside from "../../hooks/useClickOutside";
 

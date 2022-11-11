@@ -51,8 +51,18 @@ const Profile: NextPage<Props> = ({ user, isUserSessionProfile }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
   const { user: sessionUser } = session as unknown as ISession; // TODO: fix this
+  if (!sessionUser)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+
+  const { username } = context.params as { username: string };
+
   const { data: user } = await axios.get<IUser>(
-    "https://football-app-back-end.herokuapp.com/api/user/profile",
+    `https://football-app-back-end.herokuapp.com/api/user/profile/${username}`,
     {
       headers: {
         Authorization: `Bearer ${sessionUser.token}`,
