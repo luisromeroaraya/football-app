@@ -1,10 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import {
   faCircleExclamation,
   faEnvelope,
-  faKey,
+  faKey
 } from "@fortawesome/free-solid-svg-icons";
-import { signIn, useSession } from "next-auth/react";
 
 import CustomForm from "../comps/forms/CustomForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +11,7 @@ import Head from "next/head";
 import InputField from "../comps/forms/InputField";
 import Link from "next/link";
 import Spinner from "../comps/ui/Spinner";
+import { signIn } from "next-auth/react";
 import useAlreadyAuthenticated from "../comps/hooks/useAlreadyAuthenticated";
 import { useRouter } from "next/router";
 
@@ -30,7 +30,6 @@ const Login: FC = () => {
     setIsLoading(false);
     setError("Invalid username or password.");
   };
-
   useAlreadyAuthenticated();
   return (
     <>
@@ -75,7 +74,7 @@ const Login: FC = () => {
               Login
             </button>
             <p className="mt-4">
-              Don't have an account?
+              Don&apos;t have an account?
               <Link href="/signup">
                 <a className="text-blue-900"> Sign Up</a>
               </Link>

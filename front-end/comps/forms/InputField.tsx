@@ -7,7 +7,7 @@ import InputError from "./InputError";
 interface Props {
   value?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  id?: string | number;
+  id: string | number;
   name: string;
   labelName?: string;
   labelClassName?: string;
@@ -26,6 +26,7 @@ interface Props {
   errorText?: string;
   checkValidation?: (value: string) => void;
   icon?: IconProp;
+  initialValue?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, Props>(

@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 
 import CredentialProvider from "next-auth/providers/credentials";
+import { JWT } from "next-auth/jwt";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
@@ -29,7 +30,7 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => (user ? (user as {}) : token),
+    jwt: async ({ token, user }) => (user ? (user as unknown as JWT) : token),
     session: async ({ session, token }) => ({ ...session, user: token }),
   },
   pages: {
