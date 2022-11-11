@@ -58,6 +58,18 @@ public class UserController {
         return userService.readOne(id);
     }
 
+    @GetMapping("/profile")
+    @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})
+    public UserDTO readProfile(Authentication authentication) {
+        return userService.readProfile(authentication.getName());
+    }
+
+    @GetMapping("/profile/{username:[A-Za-z]+}")
+    @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})
+    public UserDTO readProfile(@Valid @PathVariable String username) {
+        return userService.readProfile(username);
+    }
+
     @PatchMapping("/update/{id:[0-9]+}")
     @ResponseStatus(HttpStatus.CREATED)
     @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})
