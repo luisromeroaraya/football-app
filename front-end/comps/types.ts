@@ -31,8 +31,8 @@ export interface IUser {
   email: string;
   username: string;
   profile: IUserProfile;
-  mainTeam: ITeam;
-  teams: ITeam[];
+  mainTeam: number;
+  teams: number[];
 }
 
 export interface ISession {
@@ -54,10 +54,15 @@ export interface IUserProfile {
   matches?: number;
   fans?: number[];
 }
+
 export interface ITeam {
   id: number;
-  name?: string;
-  logo?: string | null;
+  teamName: string;
+  nationality: string; // Do we need this?
+  createdAt: string;
+  createdBy: number;
+  players: number[];
+  logo: string | null;
 }
 
 export type IPosition =
