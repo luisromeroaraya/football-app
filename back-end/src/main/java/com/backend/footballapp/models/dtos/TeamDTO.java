@@ -15,6 +15,7 @@ import java.util.Set;
 public class TeamDTO {
     private final Long id;
     private final String teamName;
+    private final String logo;
     private final Country nationality;
     private final Instant createdAt;
     private final Long createdBy;

@@ -22,6 +22,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String teamName;
+    private String logo = "https://www.seekpng.com/png/small/28-289657_espn-soccer-team-logo-default.png";
     private Country nationality = Country.BE;
     @CreationTimestamp
     private Instant createdAt;

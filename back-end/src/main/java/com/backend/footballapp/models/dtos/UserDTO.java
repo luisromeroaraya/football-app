@@ -18,7 +18,7 @@ public class UserDTO {
     private final boolean enabled;
     private final String role;
     private Profile profile;
-    private Long mainTeam;
+    private TeamDTO mainTeam;
     private Set<Long> teams;
     private Set<Long> goals;
     private Long goalsTotal;

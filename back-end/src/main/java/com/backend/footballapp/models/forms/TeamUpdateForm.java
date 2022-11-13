@@ -8,6 +8,7 @@ import java.util.Set;
 @Data
 public class TeamUpdateForm {
     private String teamName;
+    private String logo;
     private Country nationality;
     private Long createdBy;
     private Set<Long> players;
