@@ -34,6 +34,12 @@ public class TeamController {
         return teamService.readAll();
     }
 
+    @GetMapping("/all/{id:[0-9]+}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TeamDTO> readAllByUserId(@Valid @PathVariable Long id) {
+        return teamService.readAllByUserId(id);
+    }
+
     @GetMapping("/{id:[0-9]+}")
     @ResponseStatus(HttpStatus.OK)
     public TeamDTO readOne(@PathVariable Long id) {

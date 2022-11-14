@@ -51,6 +51,13 @@ public class UserController {
         return userService.readAll();
     }
 
+    @GetMapping("/all/{id:[0-9]+}")
+    @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})
+    public List<UserDTO> readAllByTeamId(@Valid @PathVariable Long id) {
+        return userService.readAllByTeamId(id);
+    }
+
     @GetMapping("/{id:[0-9]+}")
     @ResponseStatus(HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_ORGANISER", "ROLE_USER"})

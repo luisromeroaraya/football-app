@@ -52,6 +52,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<TeamDTO> readAllByUserId(Long id) {
+        return teamRepository.findAllByUserId(id).stream()
+                .map(teamMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public TeamDTO readOne(Long id) {
         return teamRepository.findById(id)
                 .map(teamMapper::toDto)

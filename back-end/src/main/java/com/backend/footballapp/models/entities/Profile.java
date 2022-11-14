@@ -19,6 +19,7 @@ public class Profile {
     private String mail;
     private String userPic;
     private Position position;
+    private Long shirtNumber;
     private Country country;
     private LocalDate birthDate;
     private String phoneNumber;
