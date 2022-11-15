@@ -60,6 +60,12 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    public List<UserDTO> readAllByTeamId(Long id) {
+        return userRepository.readAllByTeamId(id).stream()
+                .map(userMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public UserDTO readOne(Long id) {
         return userMapper.toDto(userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(User.class, id)));

@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
+    private final TeamMapper teamMapper;
+
+    public UserMapper(TeamMapper teamMapper) {
+        this.teamMapper = teamMapper;
+    }
 
     public UserDTO toDto(User entity) {
         if (entity == null)
@@ -22,7 +27,7 @@ public class UserMapper {
                     .enabled(entity.isEnabled())
                     .role(entity.getRole())
                     .profile(entity.getProfile())
-                    .mainTeam(entity.getMainTeam().getId())
+                    .mainTeam(teamMapper.toDto(entity.getMainTeam()))
                     .teams(entity.getTeams().stream().map(Team::getId).collect(Collectors.toSet()))
                     .goals(entity.getGoals().stream().map(Goal::getId).collect(Collectors.toSet()))
                     .goalsTotal(entity.getGoalsTotal())

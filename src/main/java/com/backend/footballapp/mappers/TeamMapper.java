@@ -16,6 +16,7 @@ public class TeamMapper {
         return TeamDTO.builder()
                 .id(entity.getId())
                 .teamName(entity.getTeamName())
+                .logo(entity.getLogo())
                 .nationality(entity.getNationality())
                 .createdAt(entity.getCreatedAt())
                 .createdBy(entity.getCreatedBy().getId())

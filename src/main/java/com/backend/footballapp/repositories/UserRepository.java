@@ -19,6 +19,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("select u from User u")
     List<User> readAll();
 
+    @Query("select u from User u inner join u.teams teams where teams.id = ?1")
+    List<User> readAllByTeamId(Long id);
+
     @Transactional
     @Modifying
     @Query("update User u set u.mainTeam = ?1 where u.id = ?2")
